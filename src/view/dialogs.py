@@ -1,0 +1,50 @@
+from PySide6.QtWidgets import QDialog, QVBoxLayout, QLabel, QPushButton
+from PySide6.QtCore import Qt
+from src.settings import BTN_GREEN, BTN_BASE, ACCENT_GREEN, ACCENT_RED
+
+class LevelCompleteDialog(QDialog):
+    def __init__(self, level, score, parent=None):
+        super().__init__(parent)
+        self.setModal(True)
+        self.resize(400, 300)
+        self.setStyleSheet(f"background-color: #333; color: white; border: 2px solid {ACCENT_GREEN};")
+        layout = QVBoxLayout(self)
+        l1 = QLabel("MISSION ACCOMPLIE !")
+        l1.setAlignment(Qt.AlignCenter)
+        l1.setStyleSheet(f"font-size: 24px; font-weight: bold; color: {ACCENT_GREEN};")
+        layout.addWidget(l1)
+        l2 = QLabel(f"Score: {score}")
+        l2.setAlignment(Qt.AlignCenter)
+        l2.setStyleSheet("font-size: 18px;")
+        layout.addWidget(l2)
+        b = QPushButton("NIVEAU SUIVANT ▶")
+        b.setMinimumHeight(60)
+        b.setStyleSheet(BTN_GREEN)
+        b.clicked.connect(self.accept)
+        layout.addWidget(b)
+
+class GameOverDialog(QDialog):
+    def __init__(self, score, level, parent=None):
+        super().__init__(parent)
+        self.setModal(True)
+        self.resize(400, 300)
+        self.setStyleSheet(f"background-color: #220000; color: white; border: 2px solid {ACCENT_RED};")
+        layout = QVBoxLayout(self)
+        l1 = QLabel("ÉCHEC DE LA MISSION")
+        l1.setAlignment(Qt.AlignCenter)
+        l1.setStyleSheet(f"font-size: 24x; font-weight: bold; color: {ACCENT_RED};")
+        layout.addWidget(l1)
+        l2 = QLabel(f"Niveau {level} - Score: {score}")
+        l2.setAlignment(Qt.AlignCenter)
+        l2.setStyleSheet("font-size: 16px;")
+        layout.addWidget(l2)
+        b1 = QPushButton("🔄 RECOMMENCER")
+        b1.setMinimumHeight(50)
+        b1.setStyleSheet("background-color: #ffaa00; color: black; font-weight: bold; font-size: 14px;")
+        b1.clicked.connect(self.accept)
+        layout.addWidget(b1)
+        b2 = QPushButton("❌ QUITTER")
+        b2.setMinimumHeight(40)
+        b2.setStyleSheet(BTN_BASE)
+        b2.clicked.connect(self.reject)
+        layout.addWidget(b2)
